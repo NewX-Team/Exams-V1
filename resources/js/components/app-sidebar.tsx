@@ -14,15 +14,8 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import type { NavItem } from '@/types';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
+import { usePage } from '@inertiajs/react';
+import type { User, NavItem } from '@/types';
 
 const footerNavItems: NavItem[] = [
     {
@@ -38,6 +31,24 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
+    const { auth } = usePage<{ auth?: { user?: User | null } }>().props;
+    const role = auth?.user?.role;
+
+    const roleTitle =
+        role === 'admin'
+            ? 'Dashboard Admin'
+            : role === 'guru'
+              ? 'Dashboard Guru'
+              : 'Dashboard Murid';
+
+    const mainNavItems: NavItem[] = [
+        {
+            title: roleTitle,
+            href: dashboard(),
+            icon: LayoutGrid,
+        },
+    ];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
