@@ -41,7 +41,6 @@ class SecurityController extends Controller
             'passwordRules' => Password::defaults()->toPasswordRulesString(),
         ];
 
-
         return Inertia::render('settings/security', $props);
     }
 
